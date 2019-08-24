@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+    - name: Update or clone vim config
+      git:
+        repo: 'https://github.com/nemanjan00/vim.git'
+        dest: ~/.vim
+    - name: Run install
+      shell: "cd ~/.vim ; ./install.sh"
+    - name: Install neovim
+      package:
+        name: neovim
+        state: present
+    - name: Install plugins
+      shell: nvim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty
+
